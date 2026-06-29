@@ -3,7 +3,10 @@ import logging
 
 from dotenv import load_dotenv
 from telegram.ext import ApplicationBuilder, CommandHandler
+
 import yfinance as yf
+
+from config.settings import settings
 
 from handlers.general import hello
 from handlers.finance import Harga_Dollar, Harga_IHSG, Harga_SPX
@@ -12,11 +15,9 @@ logger = logging.getLogger(__name__)
 
 def main():
     logger.info("Starting Bot...")
-    load_dotenv()
-    TOKEN = os.getenv('TOKEN')
 
 
-    app = ApplicationBuilder().token(TOKEN).build()
+    app = ApplicationBuilder().token(settings.TOKEN).build()
 
     app.add_handler(CommandHandler("hello", hello))
     app.add_handler(CommandHandler("Harga_USD", Harga_Dollar))
