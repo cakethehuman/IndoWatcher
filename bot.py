@@ -1,36 +1,29 @@
 import os
+import logging
 
 from dotenv import load_dotenv
-
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-
+from telegram.ext import ApplicationBuilder, CommandHandler
 import yfinance as yf
 
+from handlers.general import hello
+from handlers.finance import Harga_Dollar, Harga_IHSG, Harga_SPX
+
+logger = logging.getLogger(__name__)
+
+def main():
+    logger.info("Starting Bot...")
+    load_dotenv()
+    TOKEN = os.getenv('TOKEN')
 
 
-load_dotenv()
-TOKEN = os.getenv('TOKEN')
+    app = ApplicationBuilder().token(TOKEN).build()
 
-async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(f'Hello {update.effective_user.first_name}')
+    app.add_handler(CommandHandler("hello", hello))
+    app.add_handler(CommandHandler("Harga_USD", Harga_Dollar))
+    app.add_handler(CommandHandler("Harga_IHSG", Harga_IHSG))
+    app.add_handler(CommandHandler("Harga_SPX", Harga_SPX))
 
-async def Harga_Dollar(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    ticker = yf.Ticker("IDR=X")
-    harga_dollar_idr = ticker.info.get('regularMarketPrice')
-    await update.message.reply_text(f"USD to IDR : Rp {harga_dollar_idr:,.2f}")
-    
-async def Harga_IHSG(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    ticker = yf.Ticker("^JKSE")
-    harga_IHSG = ticker.info.get('regularMarketPrice')
-    await update.message.reply_text(f"USD to IDR : Rp {harga_IHSG:,.2f}")
+    app.run_polling()
 
-app = ApplicationBuilder().token(TOKEN).build()
-
-app.add_handler(CommandHandler("hello", hello))
-app.add_handler(CommandHandler("Harga_Dollar", Harga_Dollar))
-app.add_handler(CommandHandler("Harga_IHSG", Harga_IHSG))
-# app.add_handler(CommandHandler("Harga_IHSG_Dollar", Harga_Dollar))
-
-
-app.run_polling()
+if __name__ == "__main__":
+    main()
