@@ -14,9 +14,6 @@ TICKER_BBCA = "BBCA.JK"
 TICKER_BBRI = "BBRI.JK"
 TICKER_BREN = "BREN.JK"
 
-async def Harga_Dollar(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    harga_dollar_IDR = get_ticker_latest_price(TICKER_USD_IDR)
-    await update.message.reply_text(f"USD to IDR : Rp {harga_dollar_IDR:,.2f}")
     
 async def Harga_IHSG(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     harga_IHSG = get_ticker_latest_price(TICKER_IHSG)

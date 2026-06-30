@@ -9,7 +9,8 @@ import yfinance as yf
 from config.settings import settings
 
 from handlers.general import hello,help
-from handlers.finance import Harga_Dollar, Harga_IHSG, Harga_SPX, Harga_BBCA, Harga_BBRI, Harga_BREN
+from handlers.currency import Harga_Dollar
+from handlers.stocks import Harga_IHSG, Harga_SPX, Harga_BBCA, Harga_BBRI, Harga_BREN
 
 logger = logging.getLogger(__name__)
 
