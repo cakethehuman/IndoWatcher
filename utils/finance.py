@@ -6,7 +6,7 @@ session = requests.Session(impersonate="chrome")
 def get_ticker_latest_price(name : str) -> float | None:
     try:
         ticker = yf.Ticker(name, session=session)
-        price = ticker.fast_info.get('regularMarketPrice')
+        price = ticker.info.get('regularMarketPrice')
         return price
     except Exception as e:
         logger.error(f"Failed to get {name} price because {e}")
