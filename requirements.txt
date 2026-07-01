@@ -2,3 +2,4 @@ python-telegram-bot==21.6
 yfinance==0.2.40
 pydantic-settings==2.4.0
 python-dotenv==1.0.1
+curl_cffi==0.15.0
